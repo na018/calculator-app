@@ -1,0 +1,143 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+          crossorigin="anonymous">
+  <!--  <link rel="stylesheet" type="text/css" href="static/bootstrap.css">-->
+    <link rel="stylesheet" type="text/css" href="static/css/main.css">
+    <title>My Vue Application</title>
+</head>
+<body>
+<div id="rechenmeister-app" class="container">
+    <div class="container-fluid header">
+        <h1>Become a Calculus Master</h1>
+        <p>Calculation training completed at <span class="today">{{today}}</span> by
+            <span v-show="!edit">{{player}}</span>
+            <input v-show="edit" type="text" class="text-center" v-model="player">
+            <button v-show="!edit" type="button" @click="edit = true" title="edit player name"
+                    class="bg-transparent btn">
+                🖉
+            </button>
+            <button v-show="edit" type="button" @click="edit = false" title="save">💾</button>
+        </p>
+        <img src="static/img/rechenmeister.png">
+    </div>
+
+    <div v-show="round<maxRounds+1" class="container-fluid calculator" >
+        <p>Round: {{round}}/{{maxRounds}}</p>
+        <input type="number" :value="a" disabled> {{op}}
+        <input type="number" :value="b" disabled> =
+        <input type="number" :value="guessedResult" @input="input => guessedResult = parseInt(input.target.value)" :disabled="disabled"
+               @keyup.enter="testResult()">
+        <button type="button" class="btn btn-primary  mx-2" @click="testResult()">Test Result</button>
+        <button type="button" v-show="result !== null" class="btn"
+                :class="guessedResult === result ? 'btn-success' : 'btn-danger'">{{result}}
+        </button>
+        <button type="button" v-show="result !== null" class="btn" @click="recalculate()">{{round !== maxRounds ? 'Next'
+            : 'Finish'}}
+        </button>
+        <div class="point-indicator"><p class="bg-success" :style="{width: points * 100/maxRounds + '%'}"></p></div>
+        <div class="point-indicator"><p class="bg-danger" :style="{width: error * 100/maxRounds + '%'}"></p></div>
+    </div>
+    <div v-show="round>maxRounds" class="container-fluid result-container pb-4">
+        <p>Your score is {{points}}/ {{maxRounds}}</p>
+        <button class="btn btn-info" @click="newGame()">Start a new Game</button>
+    </div>
+    <div class="container-fluid calculation-result">
+        <calculation-result v-for="(item,key) in boardOFfame" :key="key" v-if="item.player"
+                            :player="item.player" :score="item.score" :rounds="item.rounds"
+                            :date="item.date"></calculation-result>
+    </div>
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script>
+  Vue.component('calculation-result', {
+    props: ['player', 'score', 'rounds', 'date'],
+    template:
+      `<div class="calculation-result-row"><p>{{player}} achieved {{score}} out of {{rounds}} on {{date}}</p>
+        <div class="point-indicator bg-danger">
+            <p class="bg-success" :style="{width: score * 100/rounds + '%'}"></p></div></div>`,
+  })
+  var randowmNumberGenerator = function () {
+    return parseInt(Math.random() * (99) + 1)
+  }
+  var getTimeStamp = function () {
+    let today = new Date()
+    return today.toLocaleDateString() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
+  }
+  var app = new Vue({
+    el: '#rechenmeister-app',
+    data: {
+      player: 'Mathe Meister',
+      today: getTimeStamp(),
+      a: randowmNumberGenerator(),
+      b: randowmNumberGenerator(),
+      op: '+',
+      points: 0,
+      guessedResult: null,
+      result: null,
+      edit: false,
+      round: 1,
+      error: 0,
+      maxRounds: 5,
+      disabled:false,
+      boardOFfame: [
+        {
+          player: this.player,
+          score: this.points,
+          rounds: this.maxRounds,
+          date: this.today,
+        },
+      ],
+    },
+    methods: {
+      testResult() {
+        this.result = this.a + this.b
+        if(!this.disabled) {
+          if (this.result === this.guessedResult) this.points++
+          else this.error++
+        }
+        this.disabled=true
+
+      },
+      recalculate() {
+
+        this.round++
+        this.a = randowmNumberGenerator()
+        this.b = randowmNumberGenerator()
+        this.guessedResult = null
+        this.result = null
+        this.disabled=false
+      },
+      newGame() {
+        this.boardOFfame.unshift({
+          player: this.player,
+          score: this.points,
+          rounds: this.maxRounds,
+          date: this.today,
+        })
+        this.points = 0
+        this.error = 0
+        this.round = 0
+        this.recalculate()
+      },
+      updateTime() {
+        setInterval(() => {
+          this.today = getTimeStamp()
+        }, 1000)
+      },
+    },
+    created() {
+      this.updateTime()
+    },
+  })
+
+</script>
+</body>
+</html>

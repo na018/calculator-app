@@ -1,0 +1,53 @@
+body {
+  background: grey;
+  box-shadow: inset 0 0 40px #4c4b4b;
+  padding-top: 10vh; }
+
+#rechenmeister-app {
+  box-shadow: 0 0 5px black;
+  background: white;
+  padding-bottom: 10px; }
+  #rechenmeister-app img {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    margin-left: 600px;
+    top: 11vh;
+    background: white;
+    box-shadow: inset 0 0 5px black;
+    z-index: 0; }
+  #rechenmeister-app p {
+    z-index: 2; }
+  #rechenmeister-app .today {
+    width: 145px;
+    display: inline-block; }
+  #rechenmeister-app > p > input {
+    max-width: 165px; }
+  #rechenmeister-app .btn {
+    line-height: 1.1;
+    margin-bottom: 3px; }
+  #rechenmeister-app .calculator > input {
+    width: 50px; }
+  #rechenmeister-app .calculator .point-indicator {
+    width: 500px; }
+    #rechenmeister-app .calculator .point-indicator > p {
+      height: 15px; }
+  #rechenmeister-app .result-container {
+    padding-bottom: 10px; }
+  #rechenmeister-app .calculation-result {
+    max-width: 700px;
+    min-height: 200px;
+    margin: unset; }
+    #rechenmeister-app .calculation-result .calculation-result-row {
+      margin: unset; }
+      #rechenmeister-app .calculation-result .calculation-result-row > p {
+        width: 70%;
+        float: left; }
+      #rechenmeister-app .calculation-result .calculation-result-row .point-indicator {
+        width: 30%;
+        float: right; }
+        #rechenmeister-app .calculation-result .calculation-result-row .point-indicator p {
+          height: 20px;
+          margin: 0; }
+
+/*# sourceMappingURL=main.css.map */

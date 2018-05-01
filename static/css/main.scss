@@ -1,0 +1,69 @@
+body {
+  background: grey;
+  box-shadow: inset 0 0 40px #4c4b4b;
+  padding-top: 10vh;
+}
+
+#rechenmeister-app {
+  box-shadow: 0 0 5px black;
+  background: white;
+  padding-bottom: 10px;
+  img {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    margin-left: 600px;
+    top: 11vh;
+    background: white;
+    box-shadow: inset 0 0 5px black;
+    z-index:0;
+  }
+  p{
+    z-index:2;
+  }
+  .today {
+    width: 145px;
+    display: inline-block;
+  }
+  > p > input {
+    max-width: 165px;
+  }
+  .btn {
+    line-height: 1.1;
+    margin-bottom: 3px;
+  }
+  .calculator {
+    > input {
+      width: 50px;
+    }
+    .point-indicator {
+      width: 500px;
+      > p {
+        height: 15px;
+      }
+    }
+  }
+  .result-container {
+    padding-bottom: 10px;
+  }
+  .calculation-result {
+    max-width: 700px;
+    min-height: 200px;
+    margin: unset;
+    .calculation-result-row {
+      margin: unset;
+      > p {
+        width: 70%;
+        float: left;
+      }
+      .point-indicator {
+        width: 30%;
+        float: right;
+        p {
+          height: 20px;
+          margin: 0;
+        }
+      }
+    }
+  }
+}

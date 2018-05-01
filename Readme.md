@@ -1,0 +1,1 @@
+This is a calculator app based on a Vue tutorial for absolute beginners.
